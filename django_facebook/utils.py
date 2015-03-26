@@ -313,7 +313,7 @@ def next_redirect(request, default='/', additional_params=None,
     return HttpResponseRedirect(redirect_url)
 
 
-@transaction.atomic
+@transaction.commit_on_success
 def mass_get_or_create(model_class, base_queryset, id_field, default_dict,
                        global_defaults):
     '''

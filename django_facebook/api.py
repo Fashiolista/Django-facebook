@@ -468,15 +468,8 @@ class FacebookUserConverter(object):
         '''
         username = None
 
-        # start by checking the public profile link (your facebook username)
-        link = facebook_data.get('link')
-        if link:
-            username = link.split('/')[-1]
-            username = cls._make_username(username)
-            if username and 'profilephp' in username:
-                username = None
 
-        # try the email adress next
+        # try the email adress first
         if not username and 'email' in facebook_data:
             username = cls._make_username(facebook_data.get(
                 'email').split('@')[0])
@@ -484,6 +477,14 @@ class FacebookUserConverter(object):
         # last try the name of the user
         if not username or len(username) < 4:
             username = cls._make_username(facebook_data.get('name'))
+
+        # last checking the public profile link (your facebook username)
+        link = facebook_data.get('link')
+        if link and not username:
+            username = "fb%s" % link.split('/')[-1]
+            username = cls._make_username(username)
+            if username and 'profilephp' in username:
+                username = None
 
         if not username:
             raise FacebookException('couldnt figure out a username')

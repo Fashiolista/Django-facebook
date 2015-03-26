@@ -671,7 +671,7 @@ class OpenFacebook(FacebookConnection):
         self.current_user_id = current_user_id
 
         if version is None:
-            version = 'v1.0'
+            version = 'v2.2'
         self.version = version
 
     def __getstate__(self):
