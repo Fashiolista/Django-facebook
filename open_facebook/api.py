@@ -654,7 +654,7 @@ class OpenFacebook(FacebookConnection):
     '''
 
     def __init__(self, access_token=None, prefetched_data=None,
-                 expires=None, current_user_id=None, version=None):
+                 expires=None, current_user_id=None, version='v2.2'):
         '''
             :param access_token:
                 The facebook Access token
@@ -708,7 +708,7 @@ class OpenFacebook(FacebookConnection):
         authenticated = bool(me)
         return authenticated
 
-    def get(self, path, version=None, **kwargs):
+    def get(self, path, version='v2.2', **kwargs):
         '''
         Make a Facebook API call
 
@@ -745,7 +745,7 @@ class OpenFacebook(FacebookConnection):
         kwargs['ids'] = ','.join(ids)
         return self.request(**kwargs)
 
-    def set(self, path, params=None, version=None, **post_data):
+    def set(self, path, params=None, version='v2.2', **post_data):
         '''
         Write data to facebook
 
@@ -924,7 +924,7 @@ class OpenFacebook(FacebookConnection):
         url = '%sme/picture?%s' % (self.api_url, query_dict.urlencode())
         return url
 
-    def request(self, path='', post_data=None, old_api=False, version=None, **params):
+    def request(self, path='', post_data=None, old_api=False, version='v2.2', **params):
         api_base_url = self.old_api_url if old_api else self.api_url
         version = version or self.version
         if getattr(self, 'access_token', None):
